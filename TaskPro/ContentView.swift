@@ -106,6 +106,7 @@ struct ContentView: View {
                                             .frame(width: 24.0, height: 24.0)
                                         
                                     }
+                                    .foregroundColor(Color.green)
                                     Text(task.name)
                                         .padding(.horizontal, 5)
                                     Spacer()
@@ -117,6 +118,7 @@ struct ContentView: View {
                                             .scaledToFit()
                                             .frame(width: 24.0, height: 24.0)
                                     }
+                                    .foregroundColor(Color.red)
                                         
                                         
                                 }
@@ -151,6 +153,7 @@ struct ContentView: View {
                                             .scaledToFit()
                                             .frame(width: 24.0, height: 24.0)
                                     }
+                                    .foregroundColor(Color.red)
                                         
                                         
                                 }
@@ -162,7 +165,7 @@ struct ContentView: View {
                 Spacer()
                 TextField("Reminder", text: $userEntry)
                     .padding(.all, 15.0)
-                    .background(Color.blue.opacity(0.3))
+                    .background(Color.blue.opacity(0.15))
                     .cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)
                     .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                     
@@ -172,6 +175,17 @@ struct ContentView: View {
                 Button("Add Reminder") {
                     _addReminder()
                 }
+                .foregroundColor(Color.white)
+                .padding(.all, 12.0)
+                .padding(.horizontal, 24)
+                .background(Color.blue.opacity(1))
+                .cornerRadius(10)
+                .accessibilityLabel("Add Reminder")
+            
+                Spacer()
+                    .frame(height: 24)
+                
+                
                     
                     
             }.padding(.horizontal, 20.0).frame( height: geometry.size.height-3)
