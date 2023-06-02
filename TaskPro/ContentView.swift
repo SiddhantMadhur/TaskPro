@@ -23,6 +23,7 @@ class Reminder {
 }
 
 struct ContentView: View {
+    @Environment(\.colorScheme) var colorScheme
     
     @State var userEntry = "";
     @State var allReminders:[Reminder] = [];
@@ -106,7 +107,7 @@ struct ContentView: View {
                                     Image(systemName:"chevron.forward")
                                 }
                             }
-                            .foregroundColor(Color.black)
+                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black )
                             Spacer()
                         }
                         .padding(.vertical, 10)
@@ -158,7 +159,7 @@ struct ContentView: View {
                                     Image(systemName: "chevron.forward")
                                 }
                             }
-                            .foregroundColor(Color.black)
+                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black )
                             Spacer()
                         }.padding(.vertical, 10)
                         if showComplete {
@@ -205,15 +206,22 @@ struct ContentView: View {
                     
                     
                     
-                Button("Add Reminder") {
+                Button {
                     _addReminder()
-                }
-                .foregroundColor(Color.white)
-                .padding(.all, 12.0)
-                .padding(.horizontal, 24)
-                .background(Color.blue.opacity(1))
-                .cornerRadius(10)
-                .accessibilityLabel("Add Reminder")
+                } label: {
+                    HStack {
+                        Spacer()
+                        
+                        Text("Add Reminder")
+                        Spacer()
+                            
+                    }.foregroundColor(Color.white)
+                        .padding(.all, 15.0)
+                        .background(Color.blue.opacity(1))
+                        .cornerRadius(10)
+                        .accessibilityLabel("Add Reminder")
+                }.contentShape(Rectangle())
+                
             
                 Spacer()
                     .frame(height: 24)
@@ -229,5 +237,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        
     }
 }
