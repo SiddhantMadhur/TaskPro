@@ -26,6 +26,9 @@ struct ContentView: View {
     
     @State var userEntry = "";
     @State var allReminders:[Reminder] = [];
+    
+    @State var showIncomplete = true;
+    @State var showComplete = true;
 
     func _markAsComplete(idToComp: Int) {
         var tempArr:[Reminder] = [];
@@ -89,75 +92,105 @@ struct ContentView: View {
                 ScrollView {
                     VStack {
                         HStack {
-                            Text("Incomplete")
-                            Image(systemName: "chevron.down")
+                            Button {
+                                if showIncomplete {
+                                    showIncomplete = false;
+                                }else {
+                                    showIncomplete = true;
+                                }
+                            } label: {
+                                Text("Incomplete")
+                                if showIncomplete {
+                                    Image(systemName: "chevron.down")
+                                }else {
+                                    Image(systemName:"chevron.forward")
+                                }
+                            }
+                            .foregroundColor(Color.black)
                             Spacer()
                         }
                         .padding(.vertical, 10)
-                        ForEach(allReminders, id:\.name) {task in
-                            if task.completed==false{
-                                HStack {
-                                    Button {
-                                        _markAsComplete(idToComp: task.uuid)
-                                    } label: {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .resizable(resizingMode: .stretch)
-                                            .scaledToFit()
-                                            .frame(width: 24.0, height: 24.0)
-                                        
+                        if showIncomplete {
+                            ForEach(allReminders, id:\.name) {task in
+                                if task.completed==false{
+                                    HStack {
+                                        Button {
+                                            _markAsComplete(idToComp: task.uuid)
+                                        } label: {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .resizable(resizingMode: .stretch)
+                                                .scaledToFit()
+                                                .frame(width: 24.0, height: 24.0)
+                                            
+                                        }
+                                        .foregroundColor(Color.green)
+                                        Text(task.name)
+                                            .padding(.horizontal, 5)
+                                        Spacer()
+                                        Button {
+                                            _removeReminder(idToRem: task.uuid)
+                                        } label: {
+                                            Image(systemName: "delete.left.fill")
+                                                .resizable(resizingMode: .stretch)
+                                                .scaledToFit()
+                                                .frame(width: 24.0, height: 24.0)
+                                        }
+                                        .foregroundColor(Color.red)
+                                            
+                                            
                                     }
-                                    .foregroundColor(Color.green)
-                                    Text(task.name)
-                                        .padding(.horizontal, 5)
-                                    Spacer()
-                                    Button {
-                                        _removeReminder(idToRem: task.uuid)
-                                    } label: {
-                                        Image(systemName: "delete.left.fill")
-                                            .resizable(resizingMode: .stretch)
-                                            .scaledToFit()
-                                            .frame(width: 24.0, height: 24.0)
-                                    }
-                                    .foregroundColor(Color.red)
-                                        
-                                        
+                                    .padding(.vertical, 6.0)
                                 }
-                                .padding(.vertical, 6.0)
                             }
                         }
                         HStack {
-                            Text("Complete")
-                            Image(systemName: "chevron.down")
+                            Button {
+                                if showComplete {
+                                    showComplete = false
+                                }else{
+                                    showComplete = true
+                                }
+                            } label: {
+                                Text("Complete")
+                                if showComplete {
+                                    Image(systemName: "chevron.down")
+                                }else {
+                                    Image(systemName: "chevron.forward")
+                                }
+                            }
+                            .foregroundColor(Color.black)
                             Spacer()
                         }.padding(.vertical, 10)
-                        ForEach(allReminders, id:\.name) {task in
-                            if task.completed==true{
-                                HStack {
-                                    Button {
-                                        _markAsIncomplete(idToComp: task.uuid)
-                                    } label: {
-                                        Image(systemName: "arrow.uturn.forward.circle.fill")
-                                            .resizable(resizingMode: .stretch)
-                                            .scaledToFit()
-                                            .frame(width: 24.0, height: 24.0)
-                                        
+                        if showComplete {
+                            ForEach(allReminders, id:\.name) {task in
+                                if task.completed==true{
+                                    HStack {
+                                        Button {
+                                            _markAsIncomplete(idToComp: task.uuid)
+                                        } label: {
+                                            Image(systemName: "arrow.uturn.forward.circle.fill")
+                                                .resizable(resizingMode: .stretch)
+                                                .scaledToFit()
+                                                .frame(width: 24.0, height: 24.0)
+                                            
+                                        }
+                                        Text(task.name)
+                                            .padding(.horizontal, 5)
+                                        Spacer()
+                                        Button {
+                                            _removeReminder(idToRem: task.uuid)
+                                        } label: {
+                                            Image(systemName: "delete.left.fill")
+                                                .resizable(resizingMode: .stretch)
+                                                .scaledToFit()
+                                                .frame(width: 24.0, height: 24.0)
+                                        }
+                                        .foregroundColor(Color.red)
+                                            
+                                            
                                     }
-                                    Text(task.name)
-                                        .padding(.horizontal, 5)
-                                    Spacer()
-                                    Button {
-                                        _removeReminder(idToRem: task.uuid)
-                                    } label: {
-                                        Image(systemName: "delete.left.fill")
-                                            .resizable(resizingMode: .stretch)
-                                            .scaledToFit()
-                                            .frame(width: 24.0, height: 24.0)
-                                    }
-                                    .foregroundColor(Color.red)
-                                        
-                                        
+                                    .padding(.vertical, 6.0)
                                 }
-                                .padding(.vertical, 6.0)
                             }
                         }
                     }.padding(.vertical, 5)
